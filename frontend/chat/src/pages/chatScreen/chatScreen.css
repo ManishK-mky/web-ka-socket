@@ -1,0 +1,116 @@
+.box-msg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .header-class{
+    color: white;
+  }
+  
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    /* border: 1px solid red; */
+    padding: 10px;
+    background-color: #202020;
+    border-radius: 12px;
+  }
+  
+  .chat-box {
+    width: 96%;
+    max-width: 900px;
+    height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .chat-box::-webkit-scrollbar {
+    width: 0; /* Hide scrollbar for Chrome, Safari */
+  }
+  
+  .message-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    word-break: break-word;
+    background-color: rgb(0, 92, 0);
+  }
+  
+  .me {
+    align-self: flex-end;
+    font-size: 15px;
+    font-weight: 400;
+    background-color: #00a056;
+    color: white;
+    padding: 4px 6px;
+    border-radius: 10px 10px 0px 10px;
+  }
+  
+  .other {
+    align-self: flex-start;
+    background-color: #e5e5e5;
+    /* color: black; */
+    font-size: 15px;
+    font-weight: 400;
+    padding: 4px 6px;
+    border-radius: 0px 10px 10px 10px;
+  }
+  
+  .timestamp {
+    font-size: 12px;
+    color: gray;
+    margin-top: 2px;
+  }
+  
+  .me .timestamp {
+    align-self: flex-end;  /* Time on right for sender */
+    color: white;
+    font-size: 9px;
+  }
+  
+  .other .timestamp {
+    align-self: flex-start; /* Time on left for received messages */
+  }
+  
+  .input-box {
+    display: flex;
+    width: 96%;
+    /* max-width: 600px; */
+    margin-top: 10px;
+    gap: 10px;
+    /* background-color: black; */
+  }
+  
+  .input-box input {
+    flex: 1;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    outline: none;
+  }
+  
+  .input-box button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  
+  .input-box button:hover {
+    background-color: #0056b3;
+  }
+  
