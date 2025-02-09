@@ -29,7 +29,7 @@ function chatScreen({ ws }) {
     }
 
     const newSocket = new WebSocket(
-      `ws://localhost:8080?roomId=${roomId}&username=${username}`
+      `ws://web-ka-socket-1.onrender.com?roomId=${roomId}&username=${username}`
     ); // Connect to WebSocket server
 
     newSocket.onopen = () => {
