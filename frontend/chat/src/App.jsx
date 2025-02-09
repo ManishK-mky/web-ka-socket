@@ -7,7 +7,7 @@ import { Routes , Route } from 'react-router-dom'
 
 function App() {
 
-  const ws = new WebSocket("ws://localhost:8080"); 
+  const ws = new WebSocket("wss://web-ka-socket-1.onrender.com"); 
 
   return (
    <Routes>
