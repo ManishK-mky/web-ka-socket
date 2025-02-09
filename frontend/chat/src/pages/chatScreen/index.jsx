@@ -5,9 +5,13 @@ import useQueryParams from "../../customHook/urlinfo";
 import AIMessage from "../../components/AIMessage";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { HiMiniVideoCamera } from "react-icons/hi2";
+import VideoChat from "../../components/videoChat";
 
-function chatScreen() {
+function chatScreen({ ws }) {
   const navigate = useNavigate();
+  const [showVideoChat, setShowVideoChat] = useState(false);
+
   const [socket, setSocket] = useState(null);
   const [receivedMessages, setReceivedMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -68,9 +72,9 @@ function chatScreen() {
       setSocket(null);
     };
 
-    return () => {
-      newSocket.close(); // Cleanup when component unmounts
-    };
+    // return () => {
+    //   newSocket.close(); // Cleanup when component unmounts
+    // };
   }, [roomId, username]);
 
   const sendMessage = () => {
@@ -130,6 +134,10 @@ function chatScreen() {
           ))}
         </div>
         <div className="input-box">
+        <div className="video-icon">
+        <HiMiniVideoCamera onClick={() => setShowVideoChat(true)}/>
+        {showVideoChat && <VideoChat ws={socket} roomId={roomId} username={username} />}
+        </div>
           <input
             type="text"
             value={newMessage}

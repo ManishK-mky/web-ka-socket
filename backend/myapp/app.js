@@ -55,6 +55,7 @@ wss.on("connection", function connection(ws , req) {
 
       if (parsedData.type === "join") {
         roomId = parsedData?.roomId;
+        ws.roomId = roomId;
 
         if (!rooms[roomId]) {
           rooms[roomId] = [];
@@ -79,12 +80,9 @@ wss.on("connection", function connection(ws , req) {
           );
         }
       }
-      else if (parsedData.type === "message") {
+      else if (parsedData.type === "message" ) {
 
         const messageText = parsedData.text.trim()
-        console.log(messageText , ">>>");
-        
-        console.log(messageText.toLowerCase().startsWith("@ai") , "<<<");
         
         if(messageText.toLowerCase().startsWith("@ai")){
           const aiResponse = await getAIResponse(messageText.replace("@ai","").trim());
@@ -97,10 +95,18 @@ wss.on("connection", function connection(ws , req) {
         // Forward message only to the other user in the same room
         rooms[roomId]?.forEach((client) => {
           if (client !== ws) {
-            client.send(data, { binary: isBinary });
+            client.send(JSON.stringify(parsedData));
           }
         });
-      }
+      }else if (parsedData.type === "offer" || parsedData.type === "answer" || parsedData.type === "candidate") {
+      console.log(`📤 Forwarding ${parsedData.type} to room ${ws.roomId}`);
+
+      rooms[ws.roomId]?.forEach((client) => {
+        if (client !== ws) {
+          client.send(JSON.stringify(parsedData));
+        }
+      });
+    }
     } catch (error) {
       console.error("Error processing message:", error);
     }
