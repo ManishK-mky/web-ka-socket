@@ -25,7 +25,7 @@ function Home() {
           <img src={Images.EndToEnd} alt="End-to-End Chat" />
           <h2>End-to-End Chat</h2>
           <p>Private and secure messaging with encryption.</p>
-          <Link to="/chat/end-to-end" className="modal-button">Try Now</Link>
+          <Link to="/chat/room" className="modal-button">Try Now</Link>
         </div>
 
         <div className="modal-card">

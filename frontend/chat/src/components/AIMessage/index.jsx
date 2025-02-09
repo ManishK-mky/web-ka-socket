@@ -1,3 +1,5 @@
+import "./AIMessage.css"
+
 function formatAIMessage(message) {
     return message
       .replace(/\*\*\*(.*?)\*\*\*/g, "<h3>$1</h3>") // Convert ***text*** to h3 (sections)

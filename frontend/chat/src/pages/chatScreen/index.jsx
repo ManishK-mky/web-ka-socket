@@ -3,8 +3,11 @@ import "./chatScreen.css";
 import { BsSendFill } from "react-icons/bs";
 import useQueryParams from "../../customHook/urlinfo";
 import AIMessage from "../../components/AIMessage";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 function chatScreen() {
+  const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
   const [receivedMessages, setReceivedMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -91,10 +94,24 @@ function chatScreen() {
     }
   };
 
+  //--------------
+
+  const handleBackNavigation = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="box-msg">
       <div className="chat-container">
-        <h1 className="header-class">Chat It👨‍💻</h1>
+        <div className="chat-header">
+          <span className="username">
+            <div className="go-back">
+              <IoMdArrowRoundBack onClick={handleBackNavigation} />
+            </div>
+            👨‍💻 {username?.charAt(0).toUpperCase() + username?.slice(1)}
+          </span>
+          <h1 className="header-class">Chat It </h1>
+        </div>
         <div className="chat-box">
           {receivedMessages.map((msg, index) => (
             <div key={index} className={`message-wrapper ${msg.sender}`}>

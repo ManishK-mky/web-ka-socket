@@ -23,7 +23,7 @@
   .chat-box {
     width: 96%;
     max-width: 900px;
-    height: 480px;
+    height: 460px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -32,8 +32,24 @@
     scrollbar-width: none; /* Firefox */
   }
   
+  .chat-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   .chat-box::-webkit-scrollbar {
     width: 0; /* Hide scrollbar for Chrome, Safari */
+  }
+
+  .username{
+    color: white;
+    display: flex;
+    gap: 12px;
+  }
+
+  .go-back{
+    cursor: pointer;
   }
   
   .message-wrapper {
@@ -56,6 +72,7 @@
     border-radius: 10px 10px 0px 10px;
   }
   
+
   .other {
     align-self: flex-start;
     background-color: #e5e5e5;

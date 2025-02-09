@@ -71,7 +71,7 @@ wss.on("connection", function connection(ws , req) {
         }
 
         rooms[roomId].push(ws)
-        console.log(`User joined room: ${roomId}, Users: ${rooms[roomId].length}`);
+        console.log(`User joined room: ${roomId}, Username: ${username}`);
 
         if (rooms[roomId].length === 2) {
           rooms[roomId].forEach((client) =>
