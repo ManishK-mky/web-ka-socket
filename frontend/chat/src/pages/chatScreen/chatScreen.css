@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100vh;
   }
   
   .header-class{
@@ -22,7 +23,7 @@
   .chat-box {
     width: 96%;
     max-width: 900px;
-    height: 400px;
+    height: 480px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -40,7 +41,9 @@
     flex-direction: column;
     max-width: 100%;
     word-break: break-word;
-    background-color: rgb(0, 92, 0);
+    /* background-color: rgb(255, 200, 1);
+    border-radius: 12px;
+    padding: 4px; */
   }
   
   .me {
@@ -95,9 +98,10 @@
     border: 1px solid #ccc;
     font-size: 15px;
     outline: none;
+    /* width: 80%; */
   }
   
-  .input-box button {
+.chat-send-btn {
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,0 +1,43 @@
+.ai-box{
+    background-color: white;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 12px;
+}
+
+.ai-message a {
+    color: #1e90ff; /* Blue color */
+    text-decoration: none;
+    font-weight: bold;
+    background-color: white;
+  }
+  
+  .ai-message a:hover {
+    text-decoration: underline;
+  }
+  
+
+  .ai-message {
+    line-height: 1.6;
+  }
+  
+  .ai-message h3 {
+    color: #1e90ff;
+    margin-top: 10px;
+  }
+  
+  .ai-message li {
+    margin-left: 15px;
+    list-style-type: disc;
+  }
+  
+  .ai-message a {
+    color: #ff6600;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .ai-message a:hover {
+    text-decoration: underline;
+  }
+  

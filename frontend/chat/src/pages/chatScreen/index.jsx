@@ -1,27 +1,59 @@
 import { useEffect, useState } from "react";
 import "./chatScreen.css";
 import { BsSendFill } from "react-icons/bs";
+import useQueryParams from "../../customHook/urlinfo";
+import AIMessage from "../../components/AIMessage";
 
 function chatScreen() {
   const [socket, setSocket] = useState(null);
   const [receivedMessages, setReceivedMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
+  // Extracting roomId and username from URL
+  const { params, queryParams } = useQueryParams();
+  const username = queryParams.get("username");
+  const roomId = params?.roomID;
+  console.log(params?.roomID, username);
+
   useEffect(() => {
-    const newSocket = new WebSocket("ws://localhost:8080"); // Connect to WebSocket server
+    if (!roomId || !username) {
+      alert("Room ID and username are required!");
+      return;
+    }
+
+    const newSocket = new WebSocket(
+      `ws://localhost:8080?roomId=${roomId}&username=${username}`
+    ); // Connect to WebSocket server
 
     newSocket.onopen = () => {
       console.log("✅ Connection Established");
       // newSocket.send("Hello from Client!");
       setSocket(newSocket);
+      newSocket.send(JSON.stringify({ type: "join", roomId }));
     };
 
     newSocket.onmessage = (message) => {
-      console.log("📩 Received:", message.data);
-      setReceivedMessages((prevMessages) => [
-        ...prevMessages,
-        { text: message.data, sender: "other" },
-      ]);
+      try {
+        const data = JSON.parse(message.data);
+        console.log("🔹 Received message:", data);
+
+        if (data.type === "error") {
+          alert(data.message);
+          newSocket.close();
+        } else if (data.type === "message") {
+          setReceivedMessages((prev) => [
+            ...prev,
+            { text: data.text, sender: "other" },
+          ]);
+        } else if (data.type === "ai") {
+          setReceivedMessages((prev) => [
+            ...prev,
+            { text: `🤖 AI: ${data.text}`, sender: "ai" },
+          ]);
+        }
+      } catch (error) {
+        console.error("❌ Error parsing message:", error);
+      }
     };
 
     newSocket.onerror = (error) => {
@@ -36,11 +68,16 @@ function chatScreen() {
     return () => {
       newSocket.close(); // Cleanup when component unmounts
     };
-  }, []);
+  }, [roomId, username]);
 
   const sendMessage = () => {
+    if (!newMessage.trim()) {
+      alert("Message cannot be empty!");
+      return;
+    }
+
     if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(newMessage);
+      socket.send(JSON.stringify({ type: "message", text: newMessage }));
       console.log(newMessage);
 
       setReceivedMessages((prevMessages) => [
@@ -61,11 +98,17 @@ function chatScreen() {
         <div className="chat-box">
           {receivedMessages.map((msg, index) => (
             <div key={index} className={`message-wrapper ${msg.sender}`}>
-              <div className={`message ${msg.sender}`}>{msg.text}</div>
-              <span className="timestamp">
-                {new Date().getHours().toString().padStart(2, "0")}:
-                {new Date().getMinutes().toString().padStart(2, "0")}
-              </span>
+              {msg?.sender === "ai" ? (
+                <AIMessage message={msg.text} />
+              ) : (
+                <>
+                  <div className={`message ${msg.sender}`}>{msg.text}</div>
+                  <span className="timestamp">
+                    {new Date().getHours().toString().padStart(2, "0")}:
+                    {new Date().getMinutes().toString().padStart(2, "0")}
+                  </span>
+                </>
+              )}
             </div>
           ))}
         </div>
@@ -74,9 +117,10 @@ function chatScreen() {
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type a message..."
+            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+            placeholder="Type a message... (Use @AI to ask the bot)"
           />
-          <button onClick={sendMessage}>
+          <button className="chat-send-btn" onClick={sendMessage}>
             <BsSendFill />
           </button>
         </div>
